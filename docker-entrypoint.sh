@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-# setup container user
-echo "viya4-deployment:*:$(id -u):$(id -g):,,,:/viya4-deployment:/bin/bash" >> /etc/passwd
-echo "viya4-deployment:*:$(id -G | cut -d' ' -f 2)" >> /etc/group
+echo "viya4-deployment:x:$(id -u):$(id -g):Viya4:/viya4-deployment:/bin/bash" >> /etc/passwd
+echo "viya4-deployment:x:$(id -G | cut -d' ' -f 1):" >> /etc/group
 
 OPTS="-e BASE_DIR=/data"
 
@@ -21,3 +20,7 @@ done
 
 echo  "Running: ansible-playbook $OPTS $@ playbooks/${PLAYBOOK}"
 exec ansible-playbook $OPTS $@ playbooks/${PLAYBOOK}
+
+
+  
+    
